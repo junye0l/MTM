@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers";
+import { createSupabaseServerClient } from "@/lib/supabaseServerClient";
 import { muiFontsClassName } from "@/theme";
 import "./globals.css";
 
@@ -19,17 +20,22 @@ export const metadata: Metadata = {
   description: "일정, 출석, 질문, 공지를 관리하는 MTM 운영 도구",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${muiFontsClassName} antialiased bg-slate-50`}
       >
-        <Providers>{children}</Providers>
+        <Providers initialSession={session}>{children}</Providers>
       </body>
     </html>
   );

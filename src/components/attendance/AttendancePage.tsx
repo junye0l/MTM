@@ -67,13 +67,18 @@ export default function AttendancePage() {
 
   const selectedSession = sortedSessions.find((session) => session.id === selectedSessionId);
 
-  const attendanceSummary = selectedSession?.attendance.reduce(
-    (acc, record) => {
-      acc[record.status] = (acc[record.status] ?? 0) + 1;
-      return acc;
-    },
-    {} as Record<AttendanceStatus, number>,
-  ) ?? {};
+  const attendanceSummary =
+    selectedSession?.attendance.reduce(
+      (acc, record) => {
+        acc[record.status] = (acc[record.status] ?? 0) + 1;
+        return acc;
+      },
+      { expected: 0, "checked-in": 0, late: 0, absent: 0 } satisfies Record<
+        AttendanceStatus,
+        number
+      >,
+    ) ??
+    { expected: 0, "checked-in": 0, late: 0, absent: 0 };
 
   const totalAttendees = selectedSession?.attendance.length ?? 0;
   const checkedInCount = attendanceSummary["checked-in"] ?? 0;
@@ -260,4 +265,3 @@ export default function AttendancePage() {
     </Stack>
   );
 }
-

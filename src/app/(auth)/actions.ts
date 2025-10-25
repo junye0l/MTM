@@ -5,7 +5,7 @@ import type { UserRole } from "@/types/domain";
 import {
   createSupabaseServerClient,
   createSupabaseServiceClient,
-} from "@/lib/supabaseClient";
+} from "@/lib/supabaseServerClient";
 
 export type AuthActionState = {
   status: "idle" | "error";
@@ -107,7 +107,7 @@ export async function signupAction(
         return {
           status: "error",
           message: "프로필 생성 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-        };
+        }; 
       }
     }
   } catch (error) {
@@ -117,4 +117,10 @@ export async function signupAction(
   }
 
   redirect(SIGNUP_REDIRECT_PATH);
+}
+
+export async function logoutAction() {
+  const supabase = await createSupabaseServerClient();
+  await supabase.auth.signOut();
+  redirect("/login");
 }
