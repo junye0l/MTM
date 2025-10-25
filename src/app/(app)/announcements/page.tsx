@@ -1,4 +1,4 @@
-import AnnouncementsPage from "@/components/announcements/AnnouncementsPage";
+import AnnouncementsPage from "@/components/dashboard/announcements/AnnouncementsPage";
 
 export default function Page() {
   return <AnnouncementsPage />;

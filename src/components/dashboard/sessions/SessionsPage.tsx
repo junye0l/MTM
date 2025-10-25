@@ -51,13 +51,7 @@ const formatDuration = (startAt: string, endAt: string) => {
 
 const defaultAgendaTemplate = `19:00|체크인 & 인사|관심사 파악\n19:15|주요 주제 세션|핵심 개념 정리\n20:00|Q&A 및 실습 피드백|멘티 고민 해결`;
 
-const focusTagPresets = [
-  "React",
-  "TypeScript",
-  "코드리뷰",
-  "취업준비",
-  "프로젝트",
-];
+const focusTagPresets = ["React", "TypeScript", "코드리뷰", "취업준비", "프로젝트"];
 
 const locationOptions = [
   { label: "온라인 (Google Meet)", value: "온라인 (Google Meet)" },
@@ -198,72 +192,61 @@ export default function SessionsPage() {
         )}
       />
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {sortedSessions.map((session) => (
-          <Grid item xs={12} md={6} key={session.id} sx={{ display: "flex", px: { xs: 0, md: 4 } }}>
-            <Card sx={{ borderRadius: 3, flexGrow: 1, display: "flex" }}>
-              <CardContent
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2.5,
-                  px: { xs: 3, md: 3.5 },
-                  py: { xs: 3, md: 3.5 },
-                  width: "100%",
-                }}
-              >
-                <Stack direction="row" spacing={1.5} alignItems="center">
+          <Grid item xs={12} md={6} key={session.id}>
+            <Card sx={{ borderRadius: 3, height: "100%" }}>
+              <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+                <Stack direction="row" spacing={2} alignItems="center">
                   <EventIcon color="primary" />
-                  <Typography variant="h6" fontWeight={700}>
-                    {session.title}
-                  </Typography>
-                </Stack>
-
-                <Stack spacing={1.5}>
-                  <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
-                    <AccessTimeIcon fontSize="small" />
-                    <Typography variant="body2">
+                  <Box>
+                    <Typography variant="h6" fontWeight={700}>
+                      {session.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
                       {formatSessionDate(session.startAt)} · {formatDuration(session.startAt, session.endAt)}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
-                    <PlaceIcon fontSize="small" />
-                    <Typography variant="body2">{session.location}</Typography>
-                  </Stack>
+                  </Box>
+                </Stack>
+
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                  {session.focusTags.map((tag) => (
+                    <Chip key={tag} label={tag} color="primary" variant="outlined" size="small" />
+                  ))}
                 </Stack>
 
                 <Typography variant="body2" color="text.secondary">
                   {session.description}
                 </Typography>
 
-                <Stack direction="row" spacing={1} flexWrap="wrap">
-                  {session.focusTags.map((tag) => (
-                    <Chip key={tag} label={tag} size="small" color="primary" variant="outlined" />
-                  ))}
-                </Stack>
-
                 <Box
                   sx={{
-                    bgcolor: "rgba(59,130,246,0.05)",
                     borderRadius: 2,
-                    px: 2,
-                    py: 1.5,
-                    maxWidth: { xs: "100%", md: 480 },
+                    border: "1px solid rgba(148,163,184,0.3)",
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1.5,
                   }}
                 >
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2" color="primary">
-                      세션 진행 순서
+                  <Stack direction="row" spacing={1.5} alignItems="center">
+                    <AccessTimeIcon fontSize="small" color="action" />
+                    <Typography variant="body2">
+                      {formatSessionDate(session.startAt)} ~ {new Date(session.endAt).toLocaleTimeString("ko-KR")}
                     </Typography>
-                    <Stack spacing={1.2}>
+                  </Stack>
+                  <Stack direction="row" spacing={1.5} alignItems="center">
+                    <PlaceIcon fontSize="small" color="action" />
+                    <Typography variant="body2">{session.location}</Typography>
+                  </Stack>
+                  <Stack spacing={1}>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Agenda
+                    </Typography>
+                    <Stack spacing={1}>
                       {session.agenda.map((item) => (
-                        <Stack key={`${session.id}-${item.time}`} direction="row" spacing={2}>
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            width={64}
-                            fontWeight={600}
-                          >
+                        <Stack key={`${item.time}-${item.topic}`} direction="row" spacing={2}>
+                          <Typography variant="body2" sx={{ minWidth: 64 }}>
                             {item.time}
                           </Typography>
                           <Box>

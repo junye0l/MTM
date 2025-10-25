@@ -1,4 +1,4 @@
-import AttendancePage from "@/components/attendance/AttendancePage";
+import AttendancePage from "@/components/dashboard/attendance/AttendancePage";
 
 export default function Page() {
   return <AttendancePage />;

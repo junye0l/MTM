@@ -1,4 +1,4 @@
-import QuestionsPage from "@/components/questions/QuestionsPage";
+import QuestionsPage from "@/components/dashboard/questions/QuestionsPage";
 
 export default function Page() {
   return <QuestionsPage />;

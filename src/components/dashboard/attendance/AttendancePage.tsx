@@ -4,7 +4,6 @@ import { useMemo, useState, type ReactNode } from "react";
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardContent,
   FormControl,
@@ -36,7 +35,7 @@ const attendanceOptions: { label: string; value: AttendanceStatus }[] = [
 const statusIcons: Record<AttendanceStatus, ReactNode> = {
   expected: <PeopleIcon fontSize="small" />,
   "checked-in": <CheckCircleIcon fontSize="small" />,
-  late: <AccessTimeIcon fontSize="small" />, 
+  late: <AccessTimeIcon fontSize="small" />,
   absent: <ErrorIcon fontSize="small" />,
 };
 
@@ -147,12 +146,7 @@ export default function AttendancePage() {
         </CardContent>
       </Card>
 
-      <Stack
-        direction="row"
-        spacing={1.5}
-        useFlexGap
-        sx={{ width: "100%" }}
-      >
+      <Stack direction="row" spacing={1.5} useFlexGap sx={{ width: "100%" }}>
         {attendanceOptions.map((option) => (
           <Box
             key={option.value}
@@ -205,60 +199,31 @@ export default function AttendancePage() {
                           {mentee.name}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {mentee.organization}
+                          {mentee.email}
                         </Typography>
                       </Box>
                     </Stack>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <ToggleButtonGroup
-                      color="primary"
-                      exclusive
-                      value={record.status}
-                      onChange={(_, value: AttendanceStatus | null) => {
-                        if (!value) return;
-                        handleStatusChange(record, value);
-                      }}
-                      size="small"
-                      sx={{
-                        flexWrap: "wrap",
-                        gap: 1,
-                        justifyContent: { xs: "center", md: "flex-end" },
-                        "& .MuiToggleButtonGroup-grouped": {
-                          margin: 0,
-                          borderRadius: 999,
-                          border: "1px solid rgba(148, 163, 184, 0.4)",
-                          px: 1.8,
-                          py: 0.9,
-                          gap: 0.75,
-                          textTransform: "none",
-                          fontWeight: 600,
-                          minWidth: 96,
-                          justifyContent: "center",
-                        },
-                      }}
-                    >
-                      {attendanceOptions.map((option) => (
-                        <ToggleButton key={option.value} value={option.value}>
-                          {statusIcons[option.value]}
-                          <Typography variant="body2" fontWeight={600}>
-                            {statusNames[option.value]}
-                          </Typography>
-                        </ToggleButton>
-                      ))}
-                    </ToggleButtonGroup>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <ToggleButtonGroup
+                        exclusive
+                        value={record.status}
+                        size="small"
+                        onChange={(_, value) => value && handleStatusChange(record, value)}
+                      >
+                        {attendanceOptions.map((option) => (
+                          <ToggleButton key={option.value} value={option.value}>
+                            {statusIcons[option.value]} {statusNames[option.value]}
+                          </ToggleButton>
+                        ))}
+                      </ToggleButtonGroup>
+                    </Box>
                     <Typography variant="caption" color="text.secondary">
-                      업데이트: {new Date(record.updatedAt).toLocaleTimeString("ko-KR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      최근 업데이트: {new Date(record.updatedAt).toLocaleString("ko-KR")}
                     </Typography>
                   </Stack>
                 );
               })}
             </Stack>
-            <Box>
-              <Button variant="outlined">출석부 엑셀 다운로드 (향후)</Button>
-            </Box>
           </Stack>
         </CardContent>
       </Card>

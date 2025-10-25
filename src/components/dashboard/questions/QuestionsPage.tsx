@@ -60,7 +60,8 @@ export default function QuestionsPage() {
   const [selectedSessionId, setSelectedSessionId] = useState<string | undefined>(
     sortedSessions[0]?.id,
   );
-  const [statusFilter, setStatusFilter] = useState<(typeof statusTabs)[number]["value"]>("all");
+  const [statusFilter, setStatusFilter] =
+    useState<(typeof statusTabs)[number]["value"]>("all");
   const [answeringQuestion, setAnsweringQuestion] = useState<Question | null>(null);
   const [answerContent, setAnswerContent] = useState("");
   const [askingSessionId, setAskingSessionId] = useState<string | undefined>(sortedSessions[0]?.id);
@@ -167,12 +168,7 @@ export default function QuestionsPage() {
               sx={{ minHeight: 48 }}
             >
               {statusTabs.map((tab) => (
-                <Tab
-                  key={tab.value}
-                  value={tab.value}
-                  iconPosition="start"
-                  label={tab.label}
-                />
+                <Tab key={tab.value} value={tab.value} iconPosition="start" label={tab.label} />
               ))}
             </Tabs>
           </Stack>
@@ -198,63 +194,47 @@ export default function QuestionsPage() {
                 const chipProps = statusChipProps[question.status];
                 return (
                   <Grid item xs={12} key={question.id}>
-                    <Card sx={{ borderRadius: 3 }}>
+                    <Card sx={{ borderRadius: 3, border: "1px solid rgba(148,163,184,0.3)" }}>
                       <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                        <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                          <Stack direction="row" spacing={2} alignItems="center" sx={{ minWidth: 200 }}>
-                            <Avatar src={author?.avatarUrl}>{author?.name?.[0]}</Avatar>
-                            <Box>
-                              <Typography variant="subtitle2" fontWeight={600}>
-                                {author?.name ?? "알 수 없음"}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary">
-                                {new Date(question.createdAt).toLocaleString("ko-KR")}
-                              </Typography>
-                            </Box>
-                          </Stack>
-                          <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                            {question.content}
-                          </Typography>
+                        <Stack direction="row" spacing={2} alignItems="center">
+                          <Avatar src={author?.avatarUrl}>{author?.name?.slice(0, 1)}</Avatar>
+                          <Box>
+                            <Typography variant="subtitle1" fontWeight={600}>
+                              {author?.name ?? "알 수 없는 멘티"}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {new Date(question.createdAt).toLocaleString("ko-KR")}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ flexGrow: 1 }} />
                           <Chip
                             label={chipProps.label}
                             color={chipProps.color}
-                            variant={question.status === "pending" ? "outlined" : "filled"}
+                            variant="outlined"
+                            size="small"
                           />
                         </Stack>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                          {question.status !== "answered" ? (
+                        <Typography variant="body1">{question.content}</Typography>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                          {["pending", "in-progress", "answered"].map((status) => (
                             <Button
+                              key={status}
+                              variant={question.status === status ? "contained" : "text"}
                               size="small"
-                              variant="contained"
-                              onClick={() => openAnswerDialog(question)}
+                              onClick={() =>
+                                handleStatusChange(question, status as QuestionStatus)
+                              }
                             >
-                              답변 작성
+                              {statusChipProps[status as QuestionStatus].label}
                             </Button>
-                          ) : (
-                            <Button
-                              size="small"
-                              variant="outlined"
-                              onClick={() => openAnswerDialog(question)}
-                            >
+                          ))}
+                          <Box sx={{ flexGrow: 1 }} />
+                          <Button size="small" onClick={() => openAnswerDialog(question)}>
+                            답변 작성
+                          </Button>
+                          {question.answer ? (
+                            <Button size="small" variant="text" onClick={() => openAnswerDialog(question)}>
                               답변 수정
-                            </Button>
-                          )}
-                          {question.status !== "pending" ? (
-                            <Button
-                              size="small"
-                              variant="text"
-                              onClick={() => handleStatusChange(question, "pending")}
-                            >
-                              대기로 이동
-                            </Button>
-                          ) : null}
-                          {question.status !== "in-progress" ? (
-                            <Button
-                              size="small"
-                              variant="text"
-                              onClick={() => handleStatusChange(question, "in-progress")}
-                            >
-                              검토 중으로 표시
                             </Button>
                           ) : null}
                           {question.status !== "answered" && question.answer ? (
