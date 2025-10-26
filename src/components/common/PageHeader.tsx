@@ -22,11 +22,12 @@ export function PageHeader({ title, description, actions }: PageHeaderProps) {
         <Typography variant="h4" fontWeight={700} gutterBottom>
           {title}
         </Typography>
-        {description ? (
+        {description && (
           <Typography variant="body1" color="text.secondary">
             {description}
           </Typography>
-        ) : null}
+        )}
+
       </Box>
       {actions ? <Box sx={{ width: { xs: "100%", md: "auto" } }}>{actions}</Box> : null}
     </Stack>
