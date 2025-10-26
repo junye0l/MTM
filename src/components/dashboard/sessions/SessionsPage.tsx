@@ -29,6 +29,7 @@ import { ko } from "date-fns/locale";
 import { useMentorship } from "@/context/MentorshipContext";
 import { PageHeader } from "@/components/common/PageHeader";
 import type { Session } from "@/types/domain";
+import { CtaButton } from "@/components/common/CtaButton";
 
 const formatSessionDate = (iso: string) =>
   format(new Date(iso), "yyyy년 M월 d일 (EEE) a h:mm", { locale: ko });
@@ -179,15 +180,12 @@ export default function SessionsPage() {
         description="다가오는 세션을 확인하고 새 일정을 등록하세요."
         actions={(
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-            <Button
-              variant="contained"
+            <CtaButton
+              label="새 일정 등록"
               startIcon={<AddIcon />}
-              size="large"
               onClick={() => setOpen(true)}
               sx={{ minWidth: { sm: 160 } }}
-            >
-              새 일정 등록
-            </Button>
+            />
           </Stack>
         )}
       />

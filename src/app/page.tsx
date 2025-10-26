@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { Box, Button, Card, Container, Stack, Typography } from "@mui/material";
+import { Box, Card, Container, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/GridLegacy";
 import { TopNav } from "@/components/layout/TopNav";
 import { createSupabaseServerClient } from "@/lib/supabaseServerClient";
 import { FeatureHighlights } from "./(landing)/components/FeatureHighlights";
+import { CtaButton } from "@/components/common/CtaButton";
 
 export default async function LandingPage() {
   const supabase = await createSupabaseServerClient();
@@ -42,30 +42,10 @@ export default async function LandingPage() {
                   </Box>
                 </Typography>
 
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  spacing={2}
-                  alignItems={{ xs: "stretch", sm: "center" }}
-                >
-                  <Button
-                  component={Link}
-                  href={primaryHref}
-                  size="large"
-                  variant="contained"
-                  sx={{ minWidth: 200, textTransform: "none" }}
-                >
-                  {primaryLabel}
-                </Button>
-                <Button
-                  component={Link}
-                  href={secondaryHref}
-                  size="large"
-                  variant="outlined"
-                  sx={{ minWidth: 200, textTransform: "none" }}
-                >
-                  {secondaryLabel}
-                </Button>
-              </Stack>
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                  <CtaButton label={primaryLabel} href={primaryHref} />
+                  <CtaButton label={secondaryLabel} href={secondaryHref} variant="secondary" />
+                </Stack>
             </Stack>
           </Grid>
 

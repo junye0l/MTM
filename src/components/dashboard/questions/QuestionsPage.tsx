@@ -31,6 +31,7 @@ import AddCommentIcon from "@mui/icons-material/AddCommentRounded";
 import type { Question, QuestionStatus } from "@/types/domain";
 import { useMentorship } from "@/context/MentorshipContext";
 import { PageHeader } from "@/components/common/PageHeader";
+import { CtaButton } from "@/components/common/CtaButton";
 
 const statusTabs: { value: "all" | QuestionStatus; label: string; icon: ReactNode }[] = [
   { value: "all", label: "전체", icon: <QuestionAnswerIcon fontSize="small" /> },
@@ -130,14 +131,12 @@ export default function QuestionsPage() {
         description="멘티 질문의 상태를 업데이트하고 답변을 작성하세요."
         actions={(
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-            <Button
-              variant="contained"
+            <CtaButton
+              label="질문 등록"
               startIcon={<AddCommentIcon />}
               onClick={() => setQuestionDialogOpen(true)}
               sx={{ minWidth: { sm: 160 } }}
-            >
-              질문 등록
-            </Button>
+            />
           </Stack>
         )}
       />

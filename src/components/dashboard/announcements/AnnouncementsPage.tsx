@@ -25,6 +25,7 @@ import AddIcon from "@mui/icons-material/AddCircleRounded";
 import type { Announcement } from "@/types/domain";
 import { useMentorship } from "@/context/MentorshipContext";
 import { PageHeader } from "@/components/common/PageHeader";
+import { CtaButton } from "@/components/common/CtaButton";
 
 const audienceLabels: Record<Announcement["audience"], string> = {
   all: "전체",
@@ -72,14 +73,12 @@ export default function AnnouncementsPage() {
         description="멘티와 멘토에게 전달할 공지를 작성하고 관리하세요."
         actions={(
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-            <Button
-              variant="contained"
+            <CtaButton
+              label="새 공지 작성"
               startIcon={<AddIcon />}
               onClick={() => setOpen(true)}
               sx={{ minWidth: { sm: 160 } }}
-            >
-              새 공지 작성
-            </Button>
+            />
           </Stack>
         )}
       />
