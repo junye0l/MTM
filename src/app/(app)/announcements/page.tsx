@@ -3,9 +3,9 @@
 import { useState } from "react";
 import type { Announcement } from "@/types/domain";
 import { useMentorship } from "@/context/MentorshipContext";
-import { AnnouncementHeader } from "./components/AnnouncementHeader";
-import { AnnouncementList } from "./components/AnnouncementList";
-import { AnnouncementFormDialog } from "./components/AnnouncementFormDialog";
+import { AnnouncementHeader } from "./_components/AnnouncementHeader";
+import { AnnouncementList } from "./_components/AnnouncementList";
+import { AnnouncementFormDialog } from "./_components/AnnouncementFormDialog";
 
 export default function AnnouncementsPage() {
   const {
