@@ -23,7 +23,6 @@ import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthSession } from "@/context/AuthSessionContext";
 import { logoutAction } from "@/app/(auth)/actions";
-import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 const navItems = [
   { label: "일정", href: "/sessions" },
@@ -40,7 +39,6 @@ export function TopNav({ variant }: TopNavProps) {
   const pathname = usePathname();
   const { user, loading, setSessionValue } = useAuthSession();
   const router = useRouter();
-  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [isLoggingOut, startLogout] = useTransition();
   const currentTab = useMemo(() => {
@@ -58,7 +56,6 @@ export function TopNav({ variant }: TopNavProps) {
   const handleLogout = () => {
     setMenuAnchor(null);
     startLogout(async () => {
-      await supabase.auth.signOut();
       await logoutAction();
       setSessionValue(null);
       router.refresh();
