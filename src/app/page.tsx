@@ -24,21 +24,23 @@ export default async function LandingPage() {
           <Grid container spacing={6}>
             <Grid item xs={12} md={6}>
               <Stack spacing={3}>
-                <Typography variant="overline" color="primary" fontWeight={600}>
-                  Mentorship Hub
-                </Typography>
-                <Typography variant="h3" fontWeight={700} lineHeight={1.25}>
-                  멘토링 일정·출석·질문을
+                <Typography variant="h3" fontWeight={600} lineHeight={1.25}>
+                  <Typography variant="overline" color="primary" fontWeight={400} ml={0.5}>
+                    MTM
+                  </Typography>
+                  <Box component="span" display="block">
+                    멘토링의 모든 것을
+                  </Box>
                   <Box component="span" display="block">
                     한 번에 관리하는 운영 도구
                   </Box>
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography variant="body1" color="text.secondary" lineHeight={1.5}>
                   <Box component="span" display="block">
                     세션 스케줄, 멘티 출석, 질문/답변, 공지를 각각 다른 도구로 관리하고 있나요?
                   </Box>
                   <Box component="span" display="block">
-                    MTM Mentorship Hub는 멘토링 운영 흐름을 한 화면으로 모아 팀 커뮤니케이션을 더 가볍게 만들어 줍니다.
+                    MTM은 멘토링 운영 흐름을 한 화면으로 모아 팀 소통을 더 가볍게 만들어 줍니다.
                   </Box>
                 </Typography>
 
@@ -69,7 +71,7 @@ export default async function LandingPage() {
               <Typography variant="h5" fontWeight={700} mt={1}>
                 한눈에 보는 멘토링 스냅샷
               </Typography>
-              <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, maxWidth: 480 }}>
+              <Typography variant="body2" sx={{ mt: 2, opacity: 0.9, maxWidth: 490 }}>
                 다음 세션 일정, 참석 예정 멘티, 답변 대기 질문을 실시간으로 확인하고 공지까지 바로
                 보낼 수 있습니다. 데이터를 모으느라 시간을 쓰지 말고, 멘토링 자체에 집중하세요.
               </Typography>

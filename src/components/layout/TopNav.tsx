@@ -141,6 +141,16 @@ export function TopNav({ variant }: TopNavProps) {
           href="/"
           sx={{ textDecoration: "none", color: "inherit" }}
         >
+          <Box
+            component="img"
+            src="/mainicon.ico"
+            alt="MTM 로고"
+            sx={{
+              width: 32,
+              height: 32,
+              borderRadius: "20%",
+            }}
+          />
           <Typography variant="h6" fontWeight={800}>
             MTM
           </Typography>

@@ -43,7 +43,7 @@ interface FeatureHighlightsProps {
 
 export function FeatureHighlights({ features = defaultFeatures }: FeatureHighlightsProps) {
   return (
-    <Box mt={12}>
+    <Box mt={8}>
       <Typography variant="h5" fontWeight={700} textAlign="center" mb={3}>
         멘토링 운영에 꼭 필요한 기능
       </Typography>
