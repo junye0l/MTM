@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MTM",
   description: "일정, 출석, 질문, 공지를 관리하는 MTM 운영 도구",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({
