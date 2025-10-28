@@ -1,6 +1,6 @@
 import { Container, Stack, Typography } from "@mui/material";
 import type { Metadata } from "next";
-import { SignupForm } from "./SignupForm";
+import { SignupForm } from "./_components/SignupForm";
 
 export const metadata: Metadata = {
   title: "회원가입 | MTM",

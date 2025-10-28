@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { useActionState } from "react";
+import { startTransition, useActionState } from "react";
 import {
   Alert,
   Box,
@@ -14,11 +14,38 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { type AuthActionState, loginAction } from "../actions";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { type AuthActionState, loginAction } from "../../actions";
+
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 export function LoginForm() {
   const initialState: AuthActionState = { status: "idle" };
   const [state, formAction, pending] = useActionState(loginAction, initialState);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onBlur",
+  });
+
+  const onSubmit: SubmitHandler<LoginFormValues> = (values) => {
+    const formData = new FormData();
+    formData.append("email", values.email.trim());
+    formData.append("password", values.password);
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
 
   return (
     <Card elevation={0} sx={{ borderRadius: 3, border: "1px solid", borderColor: "divider" }}>
@@ -29,10 +56,10 @@ export function LoginForm() {
       <CardContent>
         <Stack
           component="form"
-          action={formAction}
           spacing={3}
           noValidate
           sx={{ mt: 1 }}
+          onSubmit={handleSubmit(onSubmit)}
         >
           {state.status === "error" && (
             <Alert severity="error" sx={{ bgcolor: "rgba(244, 67, 54, 0.08)" }}>
@@ -40,20 +67,38 @@ export function LoginForm() {
             </Alert>
           )}
           <TextField
-            required
-            name="email"
             label="이메일"
             type="email"
             autoComplete="email"
             fullWidth
+            required
+            disabled={pending}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+            {...register("email", {
+              required: "이메일을 입력해 주세요.",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "올바른 이메일 주소를 입력해 주세요.",
+              },
+            })}
           />
           <TextField
-            required
-            name="password"
             label="비밀번호"
             type="password"
             autoComplete="current-password"
             fullWidth
+            required
+            disabled={pending}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            {...register("password", {
+              required: "비밀번호를 입력해 주세요.",
+              minLength: {
+                value: 6,
+                message: "비밀번호는 최소 6자 이상이어야 합니다.",
+              },
+            })}
           />
           <Button
             size="large"

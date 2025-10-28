@@ -1,6 +1,6 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import type { Metadata } from "next";
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from "./_components/LoginForm";
 
 export const metadata: Metadata = {
   title: "로그인 | MTM",
